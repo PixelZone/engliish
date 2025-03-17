@@ -9,6 +9,7 @@
             font-family: Arial, sans-serif;
             text-align: center;
             margin: 20px;
+            background-color: #f4f4f4;
         }
 
         table {
@@ -16,6 +17,9 @@
             max-width: 400px;
             margin: auto;
             border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         th, td {
@@ -24,11 +28,19 @@
             text-align: center;
         }
 
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
         input {
             width: 100%;
             padding: 5px;
             box-sizing: border-box;
             text-align: center;
+            border: none;
+            outline: none;
+            font-size: 16px;
         }
 
         .wrong {
@@ -41,6 +53,14 @@
             padding: 10px;
             font-size: 16px;
             cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background: #007BFF;
+            color: white;
+        }
+
+        button:hover {
+            background: #0056b3;
         }
     </style>
 </head>
@@ -117,17 +137,25 @@
 
             selectedVerbs.forEach(verb => {
                 const row = document.createElement("tr");
+
+                let randomIndex = Math.floor(Math.random() * 3);
+                let inputCells = [];
+
                 verb.forEach((word, index) => {
                     const cell = document.createElement("td");
-                    if (index === 0) {
+
+                    if (index === randomIndex) {
                         cell.textContent = word;
                     } else {
                         const input = document.createElement("input");
                         input.type = "text";
+                        inputCells.push(input);
                         cell.appendChild(input);
                     }
+
                     row.appendChild(cell);
                 });
+
                 table.appendChild(row);
             });
         }
@@ -138,24 +166,33 @@
 
             for (let i = 1; i < rows.length; i++) {
                 const cells = rows[i].getElementsByTagName("td");
-                const inputs = cells[1].getElementsByTagName("input")[0];
-                const inputp = cells[2].getElementsByTagName("input")[0];
+                const inputs = cells[0].getElementsByTagName("input")[0];
+                const inputp = cells[1].getElementsByTagName("input")[0];
+                const inputpp = cells[2].getElementsByTagName("input")[0];
 
+                const correctBase = selectedVerbs[i - 1][0];
                 const correctPast = selectedVerbs[i - 1][1];
                 const correctParticiple = selectedVerbs[i - 1][2];
 
-                if (inputs.value.trim().toLowerCase() !== correctPast.toLowerCase()) {
-                    inputs.value = correctPast;
+                if (inputs && inputs.value.trim().toLowerCase() !== correctBase.toLowerCase()) {
+                    inputs.value = correctBase;
                     inputs.classList.add("wrong");
-                } else {
+                } else if (inputs) {
                     inputs.classList.remove("wrong");
                 }
 
-                if (inputp.value.trim().toLowerCase() !== correctParticiple.toLowerCase()) {
-                    inputp.value = correctParticiple;
+                if (inputp && inputp.value.trim().toLowerCase() !== correctPast.toLowerCase()) {
+                    inputp.value = correctPast;
                     inputp.classList.add("wrong");
-                } else {
+                } else if (inputp) {
                     inputp.classList.remove("wrong");
+                }
+
+                if (inputpp && inputpp.value.trim().toLowerCase() !== correctParticiple.toLowerCase()) {
+                    inputpp.value = correctParticiple;
+                    inputpp.classList.add("wrong");
+                } else if (inputpp) {
+                    inputpp.classList.remove("wrong");
                 }
             }
         }
