@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hu">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,197 +8,146 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            margin: 20px;
             background-color: #f4f4f4;
+            padding: 10px;
         }
-
+        .quiz-container {
+            max-width: 350px;
+            margin: auto;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
         table {
             width: 100%;
-            max-width: 400px;
-            margin: auto;
             border-collapse: collapse;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-
         th, td {
-            border: 1px solid black;
+            border: 1px solid #ddd;
             padding: 10px;
             text-align: center;
         }
-
         th {
-            background-color: #4CAF50;
+            background: #2ecc71;
             color: white;
         }
-
         input {
             width: 100%;
-            padding: 5px;
-            box-sizing: border-box;
-            text-align: center;
-            border: none;
-            outline: none;
-            font-size: 16px;
-        }
-
-        .wrong {
-            background-color: red;
-            color: white;
-        }
-
-        button {
-            margin: 10px;
-            padding: 10px;
-            font-size: 16px;
-            cursor: pointer;
-            border: none;
+            padding: 8px;
+            border: 1px solid #ddd;
             border-radius: 5px;
-            background: #007BFF;
-            color: white;
+            text-align: center;
+            font-size: 16px;
+            box-sizing: border-box;
         }
-
+        .buttons {
+            margin-top: 15px;
+        }
+        button {
+            padding: 10px;
+            margin: 5px;
+            border: none;
+            background-color: #2ecc71;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 48%;
+            font-size: 16px;
+        }
         button:hover {
-            background: #0056b3;
+            opacity: 0.8;
+        }
+        .incorrect {
+            background-color: #ffcccc;
         }
     </style>
 </head>
 <body>
-
-    <h1>Irregular Verbs Quiz</h1>
-    <table id="quizTable">
-        <tr>
-            <th>Base Form</th>
-            <th>Past Simple</th>
-            <th>Past Participle</th>
-        </tr>
-    </table>
-
-    <button onclick="generateQuiz()">New Quiz</button>
-    <button onclick="checkAnswers()">Check Answers</button>
+    <div class="quiz-container">
+        <h2>Irregular Verbs Quiz</h2>
+        <table id="quiz-table">
+            <tr>
+                <th>Base Form</th>
+                <th>Past Simple</th>
+                <th>Past Participle</th>
+            </tr>
+        </table>
+        <div class="buttons">
+            <button onclick="generateQuiz()">New Quiz</button>
+            <button onclick="checkAnswers()">Check Answers</button>
+        </div>
+    </div>
 
     <script>
         const verbs = [
-            ["be", "was/were", "been"],
-            ["beat", "beat", "beaten"],
-            ["become", "became", "become"],
-            ["begin", "began", "begun"],
-            ["blow", "blew", "blown"],
-            ["break", "broke", "broken"],
-            ["bring", "brought", "brought"],
-            ["build", "built", "built"],
-            ["buy", "bought", "bought"],
-            ["catch", "caught", "caught"],
-            ["choose", "chose", "chosen"],
-            ["come", "came", "come"],
-            ["cost", "cost", "cost"],
-            ["cut", "cut", "cut"],
-            ["do", "did", "done"],
-            ["draw", "drew", "drawn"],
-            ["drink", "drank", "drunk"],
-            ["drive", "drove", "driven"],
-            ["eat", "ate", "eaten"],
-            ["fall", "fell", "fallen"],
-            ["feed", "fed", "fed"],
-            ["feel", "felt", "felt"],
-            ["fight", "fought", "fought"],
-            ["find", "found", "found"],
-            ["fly", "flew", "flown"],
-            ["forget", "forgot", "forgotten"],
-            ["get", "got", "got"],
-            ["give", "gave", "given"],
-            ["go", "went", "gone"],
-            ["grow", "grew", "grown"],
-            ["hang", "hung", "hung"],
-            ["have", "had", "had"],
-            ["hear", "heard", "heard"],
-            ["hide", "hid", "hidden"],
-            ["hit", "hit", "hit"],
-            ["hold", "held", "held"],
-            ["hurt", "hurt", "hurt"],
-            ["keep", "kept", "kept"],
-            ["know", "knew", "known"]
+            ["be", "was/were", "been"], ["beat", "beat", "beaten"], ["become", "became", "become"],
+            ["begin", "began", "begun"], ["blow", "blew", "blown"], ["break", "broke", "broken"],
+            ["bring", "brought", "brought"], ["build", "built", "built"], ["buy", "bought", "bought"],
+            ["catch", "caught", "caught"], ["choose", "chose", "chosen"], ["come", "came", "come"],
+            ["cost", "cost", "cost"], ["cut", "cut", "cut"], ["do", "did", "done"], ["draw", "drew", "drawn"],
+            ["drink", "drank", "drunk"], ["drive", "drove", "driven"], ["eat", "ate", "eaten"],
+            ["fall", "fell", "fallen"], ["feed", "fed", "fed"], ["feel", "felt", "felt"],
+            ["fight", "fought", "fought"], ["find", "found", "found"], ["fly", "flew", "flown"],
+            ["forget", "forgot", "forgotten"], ["get", "got", "got"], ["give", "gave", "given"],
+            ["go", "went", "gone"], ["grow", "grew", "grown"], ["hang", "hung", "hung"],
+            ["have", "had", "had"], ["hear", "heard", "heard"], ["hide", "hid", "hidden"],
+            ["hit", "hit", "hit"], ["hold", "held", "held"], ["hurt", "hurt", "hurt"],
+            ["keep", "kept", "kept"], ["know", "knew", "known"]
         ];
 
         let selectedVerbs = [];
 
         function generateQuiz() {
-            const table = document.getElementById("quizTable");
-            table.innerHTML = `
+            const quizTable = document.getElementById("quiz-table");
+            quizTable.innerHTML = `
                 <tr>
                     <th>Base Form</th>
                     <th>Past Simple</th>
                     <th>Past Participle</th>
                 </tr>
             `;
+            selectedVerbs = [];
 
-            selectedVerbs = verbs.sort(() => 0.5 - Math.random()).slice(0, 10);
+            let shuffled = verbs.sort(() => 0.5 - Math.random()).slice(0, 10);
+            shuffled.forEach(verb => {
+                let showIndex = Math.floor(Math.random() * 3);
+                let row = document.createElement("tr");
 
-            selectedVerbs.forEach(verb => {
-                const row = document.createElement("tr");
+                for (let i = 0; i < 3; i++) {
+                    let cell = document.createElement("td");
 
-                let randomIndex = Math.floor(Math.random() * 3);
-                let inputCells = [];
-
-                verb.forEach((word, index) => {
-                    const cell = document.createElement("td");
-
-                    if (index === randomIndex) {
-                        cell.textContent = word;
+                    if (i === showIndex) {
+                        cell.textContent = verb[i]; // Egy mezőt kitölt előre
                     } else {
-                        const input = document.createElement("input");
-                        input.type = "text";
-                        inputCells.push(input);
+                        let input = document.createElement("input");
+                        input.setAttribute("data-answer", verb[i]);
                         cell.appendChild(input);
                     }
 
                     row.appendChild(cell);
-                });
+                }
 
-                table.appendChild(row);
+                selectedVerbs.push(row);
+                quizTable.appendChild(row);
             });
         }
 
         function checkAnswers() {
-            const table = document.getElementById("quizTable");
-            const rows = table.getElementsByTagName("tr");
-
-            for (let i = 1; i < rows.length; i++) {
-                const cells = rows[i].getElementsByTagName("td");
-                const inputs = cells[0].getElementsByTagName("input")[0];
-                const inputp = cells[1].getElementsByTagName("input")[0];
-                const inputpp = cells[2].getElementsByTagName("input")[0];
-
-                const correctBase = selectedVerbs[i - 1][0];
-                const correctPast = selectedVerbs[i - 1][1];
-                const correctParticiple = selectedVerbs[i - 1][2];
-
-                if (inputs && inputs.value.trim().toLowerCase() !== correctBase.toLowerCase()) {
-                    inputs.value = correctBase;
-                    inputs.classList.add("wrong");
-                } else if (inputs) {
-                    inputs.classList.remove("wrong");
-                }
-
-                if (inputp && inputp.value.trim().toLowerCase() !== correctPast.toLowerCase()) {
-                    inputp.value = correctPast;
-                    inputp.classList.add("wrong");
-                } else if (inputp) {
-                    inputp.classList.remove("wrong");
-                }
-
-                if (inputpp && inputpp.value.trim().toLowerCase() !== correctParticiple.toLowerCase()) {
-                    inputpp.value = correctParticiple;
-                    inputpp.classList.add("wrong");
-                } else if (inputpp) {
-                    inputpp.classList.remove("wrong");
-                }
-            }
+            selectedVerbs.forEach(row => {
+                let inputs = row.querySelectorAll("input");
+                inputs.forEach(input => {
+                    if (input.value.trim().toLowerCase() === input.getAttribute("data-answer").toLowerCase()) {
+                        input.classList.remove("incorrect");
+                    } else {
+                        input.classList.add("incorrect");
+                        input.value = input.getAttribute("data-answer");
+                    }
+                });
+            });
         }
 
         generateQuiz();
     </script>
-
 </body>
 </html>
