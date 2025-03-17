@@ -4,64 +4,78 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Irregular Verb Quiz</title>
-    <script>
-        const verbs = [
-            ["be", "was/were", "been"], ["beat", "beat", "beaten"], ["become", "became", "become"],
-            ["begin", "began", "begun"], ["break", "broke", "broken"], ["bring", "brought", "brought"],
-            ["build", "built", "built"], ["buy", "bought", "bought"], ["catch", "caught", "caught"],
-            ["choose", "chose", "chosen"], ["come", "came", "come"], ["do", "did", "done"],
-            ["draw", "drew", "drawn"], ["drink", "drank", "drunk"], ["drive", "drove", "driven"]
-        ];
-
-        let selectedVerbs = [];
-
-        function getRandomVerbs() {
-            selectedVerbs = [];
-            while (selectedVerbs.length < 5) {
-                let randomIndex = Math.floor(Math.random() * verbs.length);
-                if (!selectedVerbs.includes(verbs[randomIndex])) {
-                    selectedVerbs.push(verbs[randomIndex]);
-                }
+    <style>
+        table {
+            width: 100%;
+            max-width: 500px;
+            border-collapse: collapse;
+            margin: auto;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        input {
+            width: 100%;
+            padding: 5px;
+            text-align: center;
+        }
+        @media (max-width: 600px) {
+            table {
+                font-size: 14px;
             }
-            renderQuiz();
+            input {
+                font-size: 14px;
+            }
         }
-
-        function renderQuiz() {
-            let quizContainer = document.getElementById("quiz");
-            quizContainer.innerHTML = "";
-            
-            selectedVerbs.forEach((verb, index) => {
-                let disabledIndex = Math.floor(Math.random() * 3);
-                quizContainer.innerHTML += `
-                    <div>
-                        <input type="text" value="${disabledIndex === 0 ? verb[0] : ''}" ${disabledIndex === 0 ? 'disabled' : ''} id="verb${index}_0" placeholder="Base Form">
-                        <input type="text" value="${disabledIndex === 1 ? verb[1] : ''}" ${disabledIndex === 1 ? 'disabled' : ''} id="verb${index}_1" placeholder="Past Simple">
-                        <input type="text" value="${disabledIndex === 2 ? verb[2] : ''}" ${disabledIndex === 2 ? 'disabled' : ''} id="verb${index}_2" placeholder="Past Participle">
-                    </div>
-                `;
-            });
-        }
-
-        function checkAnswers() {
-            let errors = [];
-            selectedVerbs.forEach((verb, index) => {
-                for (let i = 0; i < 3; i++) {
-                    let userAnswer = document.getElementById(`verb${index}_${i}`).value.trim();
-                    if (userAnswer !== verb[i]) {
-                        errors.push(`${verb[0]} - ${verb[1]} - ${verb[2]}: Your answer (${userAnswer}) is incorrect.`);
-                    }
-                }
-            });
-            alert(errors.length ? errors.join("\n") : "Congratulations! All answers are correct! 🎉");
-        }
-
-        window.onload = getRandomVerbs;
-    </script>
+    </style>
 </head>
 <body>
-    <h2>Irregular Verb Quiz</h2>
-    <div id="quiz"></div>
-    <button onclick="checkAnswers()">Check Answers</button>
-    <button onclick="getRandomVerbs()">New Quiz</button>
+
+    <h2 style="text-align:center;">Irregular Verb Quiz</h2>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Base Form</th>
+                <th>Past Simple</th>
+                <th>Past Participle</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>catch</td>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
+            </tr>
+            <tr>
+                <td>choose</td>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
+            </tr>
+            <tr>
+                <td>be</td>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
+            </tr>
+            <tr>
+                <td>break</td>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
+            </tr>
+            <tr>
+                <td>drive</td>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div style="text-align:center; margin-top: 10px;">
+        <button>Check Answers</button>
+        <button>New Quiz</button>
+    </div>
+
 </body>
 </html>
